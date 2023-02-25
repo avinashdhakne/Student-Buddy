@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index1.html')
+    return render_template('index2.html')
     
 @app.route('/grammar', methods=['GET', 'POST'])
 def index2():
@@ -88,6 +88,30 @@ def generate_image(input_para):
         "n_images": 1
     }
     print("------>>> image generated\n")
+    response = requests.post(api_url, json=parameters)
+    if response.status_code == 200:
+        return json.loads(response.text)["output"]
+    else:
+        return None
+    
+@app.route('/questions', methods=['GET', 'POST'])
+def index5():
+    if request.method == 'POST':
+        text = request.form['video_url']
+        correct_grammar = generate_prompt(text)
+        print("---->>>", correct_grammar)
+        return render_template('questions.html', thumbnail_url=correct_grammar)
+    else:
+        return render_template('questions.html')
+    
+def generate_questions(input_para):
+    api_url = "https://v1.genr.ai/api/circuit-element/generate-questions"
+    parameters = {
+        "text": input_para,
+        "temperature": 0,
+        "questions": 20
+    }
+    print("------>>> text generated\n")
     response = requests.post(api_url, json=parameters)
     if response.status_code == 200:
         return json.loads(response.text)["output"]
