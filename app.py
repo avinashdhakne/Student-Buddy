@@ -98,8 +98,8 @@ def generate_image(input_para):
 def index5():
     if request.method == 'POST':
         text = request.form['video_url']
-        correct_grammar = generate_prompt(text)
-        print("---->>>", correct_grammar)
+        correct_grammar = generate_questions(text)
+        print("---->>> question", correct_grammar, "\n")
         return render_template('questions.html', thumbnail_url=correct_grammar)
     else:
         return render_template('questions.html')
