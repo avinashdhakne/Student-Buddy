@@ -5,25 +5,22 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
-   
-    
-@app.route('/grammar', methods=['GET', 'POST'])
-def index2():
     if request.method == 'POST':
-        text = request.form['video_url']
-        correct_grammar = correct_grammar(text)
-        print("---->>>", correct_grammar)
-        return render_template('grammar.html', thumbnail_url=correct_grammar)
+        video_url = request.form['video_url']
+        thumbnail_url = generate_thumbnail(video_url)
+        print("---->>>", thumbnail_url)
+        return render_template('index.html', thumbnail_url=thumbnail_url)
     else:
-        return render_template('grammar.html')
+        return render_template('index.html')
 
-def correct_grammar(input_para):
+def generate_thumbnail(video_url):
     api_url = "https://v1.genr.ai/api/circuit-element/correct-grammar"
-    parameters = {
-    "text": input_para,
-    "temperature": 0,
+    print("---->>>", video_url)
+    parameters =  {
+        "text": video_url,
+        "temperature": 0
     }
+    
     response = requests.post(api_url, json=parameters)
     if response.status_code == 200:
         return json.loads(response.text)["output"]
