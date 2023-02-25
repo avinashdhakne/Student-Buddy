@@ -226,14 +226,15 @@ header {
 }
 
 .review-title {
-    color: #AAD9D9;
+    color: black;
 }
 
 .grid-item {
-    background-color: #24225A;
+    background-color: #817df3;
     padding: 4em 2em;
     position: relative;
     margin-bottom: 8em;
+    border-radius: 8px;
 }
 
 .grid-img {
@@ -242,7 +243,7 @@ header {
     left: 50%;
     transform: translateX(-50%);
     user-select: none; */
-    mix-blend-mode: luminosity;
+    /* mix-blend-mode: luminosity; */
     border-radius: 90%;
 }
 
